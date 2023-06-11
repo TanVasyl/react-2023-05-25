@@ -6,18 +6,18 @@ export const Dish = ({ dish }) => {
   }
 
   const { name, price, ingredients } = dish;
-  const listIngredients = ingredients.map((ing) => { // ?
-    return(
-      <li>{ing}</li>
-    )
-  })
+
   return (
     <li>
       <p>FoodName: {name}</p>
       <p>Price: {price}</p>
       <p>Ingredients:</p>
       <ul>
-        {listIngredients}
+        {ingredients.map((ing) => { 
+          return(
+            <li>{ing}</li>
+          )
+        })}
       </ul>
       <hr/>
     </li>
