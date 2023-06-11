@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Dish = ({ dish }) => {
   if (!dish) {
     return null;
   }
   const { name, price, ingredients } = dish;
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
   const increment = () => {
     count >= 5 ? 5 : setCount(count + 1);
   };
