@@ -6,7 +6,7 @@ import { Button } from "@/components/Button/Button";
 import { useCount } from "@/hooks/useCount";
 
 export const Dish = ({ dish }) => {
-  const [count, setCount] = useCount(0);
+  const { count, increment, decrement } = useCount(0);
 
   if (!dish) {
     return null;
@@ -20,7 +20,7 @@ export const Dish = ({ dish }) => {
       <p>{price}</p>
       <div>
         <Button
-          onClick={() => setCount("decrement")}
+          onClick={() => decrement()}
           disabled={count === 0}
           className={styles.action}
         >
@@ -28,7 +28,7 @@ export const Dish = ({ dish }) => {
         </Button>
         {count}
         <Button
-          onClick={() => setCount("increment")}
+          onClick={() => increment()}
           disabled={count === 5}
           className={styles.action}
           viewVariant="secondary"

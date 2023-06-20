@@ -5,23 +5,15 @@ export function useCount(initialCount) {
   
     const [count, setCount] = useState(initialCount)
 
-    const increment = (stepChange) => {        
-       (count >= 5) ? 5 : setCount(count + stepChange)
-    }
-    const decrement = (stepChange) => {
-        (count === 0) ? 0 : setCount(count - stepChange)
-    }
+    const increment = useCallback((stepChange = 1) =>         
+        setCount((currentCount) => currentCount + stepChange),
+        []
+    );
+    const decrement = useCallback((stepChange = 1) => 
+        setCount((currentCount) => currentCount - stepChange),
+        []
+    );
     
-    const counter = useCallback((action,  stepChange = 1) => {
-        switch (action) {
-            case 'increment':
-                increment(stepChange)
-                break;
-            case 'decrement':
-                decrement(stepChange)
-                break;
-        }
-    }, [count])
 
-    return [count, counter]
+    return {count, decrement, increment}
 }
