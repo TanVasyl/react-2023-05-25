@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout/Layout";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/contexts/theme";
+import { WebVersionProvider } from "@/contexts/webVersion";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider>
-          <Layout>{children}</Layout>
+          <WebVersionProvider> 
+            <Layout>{children}</Layout>
+          </WebVersionProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -7,10 +7,15 @@ import { useDebouncedCallback } from "@/hooks/useDebounceCallback";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import styles from "./styles.module.scss";
+import { useWebVersion } from "@/contexts/webVersion";
+
+const DESKTOP = "Desktop Version";
+const MOBILE = "Mobile Version";
 
 export const Restaurants = ({ restaurants }) => {
   let [filteredRestaurants, setFilteredRestaurants] = useState(restaurants);
   let [activeRestaurantIndex, setActiveRestaurantIndex] = useState(0);
+  const version = useWebVersion();
 
   const value = useMemo(
     () => ({
@@ -44,11 +49,13 @@ export const Restaurants = ({ restaurants }) => {
 
   return (
     <div className={styles.root}>
-      <input
-        onChange={(event) => onChangeSearchValue(event.target.value)}
-        className={styles.searchFiled}
-        placeholder="Введите название ресторана"
-      />
+      {version === DESKTOP && (
+        <input
+          onChange={(event) => onChangeSearchValue(event.target.value)}
+          className={styles.searchFiled}
+          placeholder="Введите название ресторана"
+        />
+      )}
       <div className={styles.filters}>
         {filteredRestaurants.map(({ name }, index) => (
           <Button
