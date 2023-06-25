@@ -1,4 +1,15 @@
+import { selectById, selectIds } from "@/redux/features/restaurant";
+
 export const selectRestaurantModule = (state) => state.restaurant;
-export const selectRestaurantIds = (state) => selectRestaurantModule(state).ids;
+
+export const selectRestaurantIds = (state) =>
+  selectIds(selectRestaurantModule(state));
+
 export const selectRestaurant = (state, restaurantId) =>
-  selectRestaurantModule(state).entities[restaurantId];
+  selectById(selectRestaurantModule(state), restaurantId);
+
+export const selectRestaurantDishIds = (state, restaurantId) =>
+  selectRestaurant(state, restaurantId)?.menu;
+
+export const selectRestaurantReviewIds = (state, restaurantId) =>
+  selectRestaurant(state, restaurantId)?.reviews;
