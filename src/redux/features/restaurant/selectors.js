@@ -1,3 +1,4 @@
+import { STATUSES } from "@/constants/statuses";
 import { selectById, selectIds } from "@/redux/features/restaurant";
 
 export const selectRestaurantModule = (state) => state.restaurant;
@@ -13,3 +14,9 @@ export const selectRestaurantDishIds = (state, restaurantId) =>
 
 export const selectRestaurantReviewIds = (state, restaurantId) =>
   selectRestaurant(state, restaurantId)?.reviews;
+
+export const selectRestaurantLoadingStatus = (state) =>
+  selectRestaurantModule(state).loadingStatus;
+
+export const selectIsRestaurantLoading = (state) =>
+  selectRestaurantLoadingStatus(state) === STATUSES.pending;

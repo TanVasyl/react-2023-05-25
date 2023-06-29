@@ -1,18 +1,36 @@
-import { normalizedDishes } from "@/mocks/normalized-fixtures";
-import { createSlice } from "@reduxjs/toolkit";
+import { STATUSES } from "@/constants/statuses";
+import { fetchDishByRestaurantIdIfNotExist } from "@/redux/features/dish/thunk/fetchDishByRestaurantIdIfNotExist";
+import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  entities: normalizedDishes.reduce((acc, dish) => {
-    acc[dish.id] = dish;
+const dishEntityAdapter = createEntityAdapter();
 
-    return acc;
-  }, {}),
-  ids: normalizedDishes.map(({ id }) => id),
-};
-
-const dishSlice = createSlice({
+export const dishSlice = createSlice({
   name: "dish",
-  initialState,
+  initialState: dishEntityAdapter.getInitialState({
+    loadingStatus: STATUSES.idle,
+  }),
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchDishByRestaurantIdIfNotExist.pending, (state) => {
+        state.loadingStatus = STATUSES.pending;
+      })
+      .addCase(
+        fetchDishByRestaurantIdIfNotExist.fulfilled,
+        (state, { payload }) => {
+          state.loadingStatus = STATUSES.finished;
+          dishEntityAdapter.addMany(state, payload);
+        }
+      )
+      .addCase(
+        fetchDishByRestaurantIdIfNotExist.rejected,
+        (state, { payload }) => {
+          state.loadingStatus =
+            payload === STATUSES.alreadyLoaded
+              ? STATUSES.finished
+              : STATUSES.failed;
+        }
+      );
+  },
 });
 
 export const dishReducer = dishSlice.reducer;

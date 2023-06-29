@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import classNames from "classnames";
 import { DishContainer } from "@/containers/DishContainer";
+import { Skeleton } from "@/components/Skeleton/Skeleton";
 
 /* eslint-disable react/jsx-key */
 export const Menu = ({ dishIds, className }) => {
