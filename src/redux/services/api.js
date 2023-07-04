@@ -12,6 +12,16 @@ export const api = createApi({
       providesTags: (result) =>
         (result || []).map(({ id }) => ({ type: "Restaurant", id })),
     }),
+    getDishes: builder.query({
+      query:(restaurantId) => ({
+        url: 'dishes',
+        params: {
+          restaurantId
+        },
+        providesTags: (result) =>
+        (result || []).map(({ id }) => ({ type: "Dishes", id })),
+      })
+    }),
     getReviews: builder.query({
       query: (restaurantId) => ({
         url: "reviews",
@@ -40,11 +50,21 @@ export const api = createApi({
       }),
       invalidatesTags: () => [{ type: "Review", id: "LIST" }],
     }),
+    getUsers: builder.query({
+      query: () => ({
+        url: 'users',
+      }),
+      providesTags: (result) =>
+      (result || []).map(({ id }) => ({ type: "User", id })),
+    }),
   }),
+  
 });
 
 export const {
   useGetRestaurantsQuery,
   useGetReviewsQuery,
   useCreateReviewMutation,
+  useGetDishesQuery,
+  useGetUsersQuery,
 } = api;

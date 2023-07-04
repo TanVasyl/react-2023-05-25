@@ -5,10 +5,6 @@ import classNames from "classnames";
 import { UserContainer } from "@/containers/UserContainer";
 
 export const Review = ({ review, className }) => {
-  if (!review) {
-    return null;
-  }
-
   const { text, userId, rating } = review;
   return (
     <div className={classNames(styles.root, className)}>

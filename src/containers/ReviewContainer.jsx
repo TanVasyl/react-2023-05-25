@@ -1,14 +1,21 @@
 import { Review } from "@/components/Review/Review";
-import { selectReview } from "@/redux/features/review/selectors";
+import { useGetReviewsQuery } from "@/redux/services/api";
 import React from "react";
-import { useSelector } from "react-redux";
 
-export const ReviewContainer = ({ reviewId, ...props }) => {
-  const review = useSelector((state) => selectReview(state, reviewId));
-
-  if (!review) {
+export const ReviewContainer = ({ restaurantId, className }) => {
+  const { data: reviews, isLoading } = useGetReviewsQuery(restaurantId);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (!reviews?.length) {
     return null;
   }
 
-  return <Review {...props} review={review} />;
+  return (
+    <div>
+      {reviews.map((review) => (
+        <Review review={review} className={className} />
+      ))}
+    </div>
+  );
 };
